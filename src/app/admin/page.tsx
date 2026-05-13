@@ -3,6 +3,7 @@
 import { useId, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -101,8 +102,11 @@ export default function AdminPage() {
               </p>
             </div>
 
-            {/* Preview — 16:9 aspect ratio held by aspect-video */}
-            <div className="w-full aspect-video relative rounded-lg overflow-hidden border bg-muted flex items-center justify-center">
+            {/* Preview — AspectRatio locks 16:9 so the form doesn't jump */}
+            <AspectRatio
+              ratio={16 / 9}
+              className="rounded-lg overflow-hidden border bg-muted flex items-center justify-center"
+            >
               {previewUrl ? (
                 <Image
                   src={previewUrl}
@@ -117,7 +121,7 @@ export default function AdminPage() {
                   No cover uploaded yet
                 </p>
               )}
-            </div>
+            </AspectRatio>
 
             <UploadWidget
               onSuccess={handleUploadSuccess}

@@ -9,19 +9,22 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { CoverSkeleton } from "./CoverSkeleton";
 import { buildCoverUrl } from "@/lib/cloudinary";
 import type { Post } from "@/types";
 
 interface BlogCardProps {
   post: Post;
+  /** Pass true for the first card — sets priority + eager loading to fix LCP. */
+  priority?: boolean;
 }
 
 /**
  * Renders a blog post card with a Cloudinary-optimised 16:9 cover.
- * Shows a skeleton while the image loads to prevent layout shift.
+ * The first card in the grid receives `priority` to satisfy LCP requirements.
  */
-export function BlogCard({ post }: BlogCardProps) {
+export function BlogCard({ post, priority = false }: BlogCardProps) {
   const [loaded, setLoaded] = useState(false);
   const [errored, setErrored] = useState(false);
 
@@ -29,8 +32,8 @@ export function BlogCard({ post }: BlogCardProps) {
 
   return (
     <Card className="overflow-hidden group transition-shadow hover:shadow-lg flex flex-col h-full">
-      {/* Cover image — always 16:9 */}
-      <div className="relative w-full aspect-video overflow-hidden bg-muted">
+      {/* Cover — AspectRatio locks the 16:9 container */}
+      <AspectRatio ratio={16 / 9} className="bg-muted overflow-hidden">
         {!loaded && !errored && <CoverSkeleton />}
 
         {!errored && (
@@ -39,6 +42,7 @@ export function BlogCard({ post }: BlogCardProps) {
             alt={`Cover image for ${post.title}`}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            priority={priority}
             className={`object-cover transition-transform duration-300 group-hover:scale-105 ${
               loaded ? "opacity-100" : "opacity-0"
             }`}
@@ -55,7 +59,7 @@ export function BlogCard({ post }: BlogCardProps) {
             No image
           </div>
         )}
-      </div>
+      </AspectRatio>
 
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between gap-2">
