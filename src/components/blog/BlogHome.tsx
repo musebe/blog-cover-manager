@@ -1,8 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { SiteHeader } from "@/components/layout/SiteHeader";
 import { BlogGrid } from "./BlogGrid";
 import { usePosts } from "@/hooks/usePosts";
 
@@ -12,15 +10,7 @@ export function BlogHome() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Site header */}
-      <header className="border-b bg-card sticky top-0 z-10">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
-          <span className="font-semibold tracking-tight">The Dev Blog</span>
-          <Link href="/admin" className={cn(buttonVariants({ size: "sm" }))}>
-            + New Post
-          </Link>
-        </div>
-      </header>
+      <SiteHeader />
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 py-10">
         {/* Page title */}

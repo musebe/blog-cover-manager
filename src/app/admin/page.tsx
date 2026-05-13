@@ -3,6 +3,7 @@
 import { useId, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { SiteHeader } from "@/components/layout/SiteHeader";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -73,18 +74,16 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b bg-card sticky top-0 z-10">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
-          <h1 className="text-base font-semibold">New Post</h1>
+      <SiteHeader
+        action={
           <a
             href="/"
             className="text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             ← Back to blog
           </a>
-        </div>
-      </header>
+        }
+      />
 
       <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8">
         <form
